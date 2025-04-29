@@ -1,0 +1,26 @@
+package com.ask.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
+
+@Entity
+@Table(name = "tbl_categoria")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Categoria {
+
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(name = "id_categoria")
+    private UUID idCategoria;
+
+    @Column(name = "nombre_categoria", nullable = false, length = 100)
+    private String nombreCategoria;
+
+    @Column(name = "descripcion_categoria", length = 255)
+    private String descripcion;
+}

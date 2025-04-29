@@ -1,0 +1,38 @@
+# Ignorar archivos de Maven Wrapper
+mvnw
+mvnw.cmd
+.mvn/
+
+# Ignorar carpetas de compilación
+target/
+build/
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignorar archivos de configuración de IDEs
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+HELP.md

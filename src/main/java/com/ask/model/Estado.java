@@ -1,0 +1,26 @@
+package com.ask.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
+
+@Entity
+@Table(name = "tbl_estado")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Estado {
+
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(name = "id_estado")
+    private UUID idEstado;
+
+    @Column(name = "nombre_estado", nullable = false, length = 100)
+    private String nombreEstado;
+
+    @Column(name = "descripcion_estado", length = 255)
+    private String descripcion;
+}
