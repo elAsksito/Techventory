@@ -15,9 +15,10 @@ import java.util.UUID;
 public class Producto {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_producto")
-    private UUID idProducto;
+    private String idProducto;
 
     @Column(name = "nombre_producto", nullable = false)
     private String nombreProducto;

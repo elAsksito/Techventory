@@ -15,9 +15,10 @@ import java.util.UUID;
 public class MovimientoProd {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_movimiento_prod")
-    private UUID id;
+    private String id;
 
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;

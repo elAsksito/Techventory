@@ -14,9 +14,10 @@ import java.util.UUID;
 public class Estado {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_estado")
-    private UUID idEstado;
+    private String idEstado;
 
     @Column(name = "nombre_estado", nullable = false, length = 100)
     private String nombreEstado;

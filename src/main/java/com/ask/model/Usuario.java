@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "tbl_usuario")
 @Data
@@ -18,9 +16,10 @@ import java.util.UUID;
 public class Usuario {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_usuario")
-    private UUID idUsuario;
+    private String idUsuario;
 
     @Column(name = "nombre_usuario", nullable = false, length = 50)
     private String nombreUsuario;

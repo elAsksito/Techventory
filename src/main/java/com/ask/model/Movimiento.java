@@ -16,9 +16,10 @@ import java.util.UUID;
 public class Movimiento {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_movimiento")
-    private UUID idMovimiento;
+    private String idMovimiento;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

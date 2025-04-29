@@ -1,11 +1,11 @@
 package com.ask.service;
 
+import com.ask.dto.EstadoRequest;
+import com.ask.exception.ResourceNotFoundException;
 import com.ask.model.Estado;
 import com.ask.repository.EstadoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,23 +16,26 @@ public class EstadoService {
 
     private final EstadoRepository estadoRepository;
 
-    public Estado guardar(Estado estado) {
+    public Estado guardar(EstadoRequest request) {
+        Estado estado = new Estado();
+        estado.setNombreEstado(request.getNombreEstado());
+        estado.setDescripcion(request.getDescripcion());
         return estadoRepository.save(estado);
     }
 
     public Estado obtenerPorId(UUID id) {
         return estadoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Estado no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Estado", "id", id));
     }
 
     public List<Estado> listarTodos() {
         return estadoRepository.findAll();
     }
 
-    public Estado actualizar(UUID id, Estado estadoActualizado) {
+    public Estado actualizar(UUID id, EstadoRequest request) {
         Estado estado = obtenerPorId(id);
-        estado.setNombreEstado(estadoActualizado.getNombreEstado());
-        estado.setDescripcion(estadoActualizado.getDescripcion());
+        estado.setNombreEstado(request.getNombreEstado());
+        estado.setDescripcion(request.getDescripcion());
         return estadoRepository.save(estado);
     }
 

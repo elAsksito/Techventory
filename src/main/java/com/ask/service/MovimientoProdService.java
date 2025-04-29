@@ -1,11 +1,15 @@
 package com.ask.service;
 
+import com.ask.dto.MovimientoProdRequest;
+import com.ask.exception.ResourceNotFoundException;
+import com.ask.model.Movimiento;
 import com.ask.model.MovimientoProd;
+import com.ask.model.Producto;
 import com.ask.repository.MovimientoProdRepository;
+import com.ask.repository.MovimientoRepository;
+import com.ask.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,29 +19,54 @@ import java.util.UUID;
 public class MovimientoProdService {
 
     private final MovimientoProdRepository movimientoProdRepository;
+    private final MovimientoRepository movimientoRepository;
+    private final ProductoRepository productoRepository;
 
-    public MovimientoProd guardar(MovimientoProd movimientoProd) {
+    public MovimientoProd guardar(MovimientoProdRequest request) {
+        Movimiento movimiento = movimientoRepository.findById(request.getIdMovimiento())
+                .orElseThrow(() -> new ResourceNotFoundException("Movimiento", "id", request.getIdMovimiento()));
+
+        Producto producto = productoRepository.findById(request.getIdProducto())
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", request.getIdProducto()));
+
+        MovimientoProd movimientoProd = MovimientoProd.builder()
+                .cantidad(request.getCantidad())
+                .movimiento(movimiento)
+                .producto(producto)
+                .build();
+
         return movimientoProdRepository.save(movimientoProd);
     }
 
-    public List<MovimientoProd> guardarTodos(List<MovimientoProd> listaMovimientoProd) {
-        return movimientoProdRepository.saveAll(listaMovimientoProd);
+    public List<MovimientoProd> guardarTodos(List<MovimientoProdRequest> listaMovimientoProd) {
+        List<MovimientoProd> movimientoProds = listaMovimientoProd.stream()
+                .map(this::guardar)
+                .toList();
+        return movimientoProdRepository.saveAll(movimientoProds);
     }
 
     public MovimientoProd obtenerPorId(UUID id) {
         return movimientoProdRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movimiento de producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("MovimientoProd", "id", id));
     }
 
     public List<MovimientoProd> listarTodos() {
         return movimientoProdRepository.findAll();
     }
 
-    public MovimientoProd actualizar(UUID id, MovimientoProd movimientoProdActualizado) {
+    public MovimientoProd actualizar(UUID id, MovimientoProdRequest request) {
         MovimientoProd movimientoProd = obtenerPorId(id);
-        movimientoProd.setProducto(movimientoProdActualizado.getProducto());
-        movimientoProd.setMovimiento(movimientoProdActualizado.getMovimiento());
-        movimientoProd.setCantidad(movimientoProdActualizado.getCantidad());
+
+        Movimiento movimiento = movimientoRepository.findById(request.getIdMovimiento())
+                .orElseThrow(() -> new ResourceNotFoundException("Movimiento", "id", request.getIdMovimiento()));
+
+        Producto producto = productoRepository.findById(request.getIdProducto())
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", request.getIdProducto()));
+
+        movimientoProd.setCantidad(request.getCantidad());
+        movimientoProd.setMovimiento(movimiento);
+        movimientoProd.setProducto(producto);
+
         return movimientoProdRepository.save(movimientoProd);
     }
 

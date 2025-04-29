@@ -16,9 +16,10 @@ import java.util.UUID;
 public class Rol {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_rol")
-    private UUID idRol;
+    private String idRol;
 
     @Column(name = "nombre_rol")
     private String nombreRol;

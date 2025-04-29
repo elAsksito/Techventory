@@ -14,9 +14,10 @@ import java.util.UUID;
 public class Categoria {
 
     @Id
+    @GeneratedValue(generator = "UUID")
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(name = "id_categoria")
-    private UUID idCategoria;
+    private String idCategoria;
 
     @Column(name = "nombre_categoria", nullable = false, length = 100)
     private String nombreCategoria;
