@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class MovimientoService {
         return movimientoRepository.save(movimiento);
     }
 
-    public Movimiento obtenerPorId(UUID id) {
+    public Movimiento obtenerPorId(String id) {
         return movimientoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movimiento", "id", id));
     }
@@ -42,7 +41,7 @@ public class MovimientoService {
         return movimientoRepository.findAll();
     }
 
-    public Movimiento actualizar(UUID id, MovimientoRequest request) {
+    public Movimiento actualizar(String id, MovimientoRequest request) {
         Movimiento movimiento = obtenerPorId(id);
         Usuario usuario = usuarioRepository.findById(request.getIdUsuario())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", request.getIdUsuario()));
@@ -55,7 +54,7 @@ public class MovimientoService {
         return movimientoRepository.save(movimiento);
     }
 
-    public void eliminar(UUID id) {
+    public void eliminar(String id) {
         Movimiento movimiento = obtenerPorId(id);
         movimientoRepository.delete(movimiento);
     }

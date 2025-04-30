@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/productos")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class ProductoController {
 
@@ -31,7 +31,7 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerProducto(@PathVariable UUID id) {
+    public ResponseEntity<Producto> obtenerProducto(@PathVariable String id) {
         Producto producto = productoService.obtenerPorId(id);
         return ResponseEntity.ok(producto);
     }
@@ -56,7 +56,7 @@ public class ProductoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Producto> actualizarProducto(
-            @PathVariable UUID id,
+            @PathVariable String id,
             @Valid @RequestBody ProductoRequest request
     ) {
         Producto productoActualizado = productoService.actualizar(id, request);
@@ -64,7 +64,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarProducto(@PathVariable UUID id) {
+    public ResponseEntity<Void> eliminarProducto(@PathVariable String id) {
         productoService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

@@ -8,11 +8,12 @@ import com.ask.model.Estado;
 import com.ask.repository.ProductoRepository;
 import com.ask.repository.CategoriaRepository;
 import com.ask.repository.EstadoRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
-    public Producto obtenerPorId(UUID id) {
+    public Producto obtenerPorId(String id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
     }
@@ -63,7 +64,7 @@ public class ProductoService {
         return productoRepository.findByEstadoNombreEstadoContainingIgnoreCase(nombreEstado);
     }
 
-    public Producto actualizar(UUID id, ProductoRequest request) {
+    public Producto actualizar(String id, ProductoRequest request) {
         Producto producto = obtenerPorId(id);
         Categoria categoria = categoriaRepository.findById(request.getIdCategoria())
                 .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", request.getIdCategoria()));
@@ -82,7 +83,7 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
-    public void eliminar(UUID id) {
+    public void eliminar(String id) {
         Producto producto = obtenerPorId(id);
         productoRepository.delete(producto);
     }

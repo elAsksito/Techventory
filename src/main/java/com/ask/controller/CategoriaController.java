@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/categorias")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class CategoriaController {
 
@@ -31,14 +32,14 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> obtenerCategoria(@PathVariable UUID id) {
+    public ResponseEntity<Categoria> obtenerCategoria(@PathVariable String id) {
         Categoria categoria = categoriaService.obtenerPorId(id);
         return ResponseEntity.ok(categoria);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> actualizarCategoria(
-            @PathVariable UUID id,
+            @PathVariable String id,
             @Valid @RequestBody CategoriaRequest request
     ) {
         Categoria actualizada = categoriaService.actualizar(id, request);
@@ -46,7 +47,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarCategoria(@PathVariable UUID id) {
+    public ResponseEntity<Void> eliminarCategoria(@PathVariable String id) {
         categoriaService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

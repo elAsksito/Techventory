@@ -45,7 +45,7 @@ public class MovimientoProdService {
         return movimientoProdRepository.saveAll(movimientoProds);
     }
 
-    public MovimientoProd obtenerPorId(UUID id) {
+    public MovimientoProd obtenerPorId(String id) {
         return movimientoProdRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("MovimientoProd", "id", id));
     }
@@ -54,7 +54,7 @@ public class MovimientoProdService {
         return movimientoProdRepository.findAll();
     }
 
-    public MovimientoProd actualizar(UUID id, MovimientoProdRequest request) {
+    public MovimientoProd actualizar(String id, MovimientoProdRequest request) {
         MovimientoProd movimientoProd = obtenerPorId(id);
 
         Movimiento movimiento = movimientoRepository.findById(request.getIdMovimiento())
@@ -70,7 +70,7 @@ public class MovimientoProdService {
         return movimientoProdRepository.save(movimientoProd);
     }
 
-    public void eliminar(UUID id) {
+    public void eliminar(String id) {
         MovimientoProd movimientoProd = obtenerPorId(id);
         movimientoProdRepository.delete(movimientoProd);
     }

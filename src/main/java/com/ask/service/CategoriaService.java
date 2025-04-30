@@ -23,7 +23,7 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria obtenerPorId(UUID id) {
+    public Categoria obtenerPorId(String id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoría", "id", id));
     }
@@ -32,14 +32,14 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
-    public Categoria actualizar(UUID id, CategoriaRequest request) {
+    public Categoria actualizar(String id, CategoriaRequest request) {
         Categoria categoria = obtenerPorId(id);
         categoria.setNombreCategoria(request.getNombreCategoria());
         categoria.setDescripcion(request.getDescripcion());
         return categoriaRepository.save(categoria);
     }
 
-    public void eliminar(UUID id) {
+    public void eliminar(String id) {
         Categoria categoria = obtenerPorId(id);
         categoriaRepository.delete(categoria);
     }

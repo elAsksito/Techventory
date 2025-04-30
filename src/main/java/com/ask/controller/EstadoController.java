@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/estados")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class EstadoController {
 
@@ -31,14 +31,14 @@ public class EstadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estado> obtenerEstado(@PathVariable UUID id) {
+    public ResponseEntity<Estado> obtenerEstado(@PathVariable String id) {
         Estado estado = estadoService.obtenerPorId(id);
         return ResponseEntity.ok(estado);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Estado> actualizarEstado(
-            @PathVariable UUID id,
+            @PathVariable String id,
             @Valid @RequestBody EstadoRequest request
     ) {
         Estado estadoActualizado = estadoService.actualizar(id, request);
@@ -46,7 +46,7 @@ public class EstadoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarEstado(@PathVariable UUID id) {
+    public ResponseEntity<Void> eliminarEstado(@PathVariable String id) {
         estadoService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

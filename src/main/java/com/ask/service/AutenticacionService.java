@@ -33,7 +33,7 @@ public class AutenticacionService {
         return jwtProvider.generateToken(usuario.getCorreoUsuario(), usuario.getRol().getNombreRol());
     }
 
-    public String register(RegisterRequest registerRequest) {
+    public Usuario register(RegisterRequest registerRequest) {
         if(usuarioRepository.findByCorreoUsuario(registerRequest.getCorreoUsuario()).isPresent()){
             throw new BusinessException("El correo electrónico ya está registrado");
         }
@@ -41,7 +41,7 @@ public class AutenticacionService {
         Usuario usuario = createUsuarioFromRequest(registerRequest);
         usuarioRepository.save(usuario);
 
-        return "Usuario registrado con éxito";
+        return usuario;
     }
 
     private Usuario createUsuarioFromRequest(RegisterRequest request) {

@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/movimientos-prod")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class MovimientoProdController {
 
@@ -37,14 +37,14 @@ public class MovimientoProdController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovimientoProd> obtenerMovimientoProd(@PathVariable UUID id) {
+    public ResponseEntity<MovimientoProd> obtenerMovimientoProd(@PathVariable String id) {
         MovimientoProd movimientoProd = movimientoProdService.obtenerPorId(id);
         return ResponseEntity.ok(movimientoProd);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MovimientoProd> actualizarMovimientoProd(
-            @PathVariable UUID id,
+            @PathVariable String id,
             @Valid @RequestBody MovimientoProdRequest request
     ) {
         MovimientoProd movimientoProdActualizado = movimientoProdService.actualizar(id, request);
@@ -52,7 +52,7 @@ public class MovimientoProdController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarMovimientoProd(@PathVariable UUID id) {
+    public ResponseEntity<Void> eliminarMovimientoProd(@PathVariable String id) {
         movimientoProdService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

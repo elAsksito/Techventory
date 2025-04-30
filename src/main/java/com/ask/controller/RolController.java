@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/roles")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class RolController {
 
@@ -25,7 +25,7 @@ public class RolController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Rol> obtenerRolPorId(@PathVariable UUID id) {
+    public ResponseEntity<Rol> obtenerRolPorId(@PathVariable String id) {
         return ResponseEntity.ok(rolService.obtenerRolPorId(id));
     }
 
@@ -35,12 +35,12 @@ public class RolController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Rol> actualizarRol(@PathVariable UUID id, @RequestBody @Valid RolRequest request) {
+    public ResponseEntity<Rol> actualizarRol(@PathVariable String id, @RequestBody @Valid RolRequest request) {
         return ResponseEntity.ok(rolService.actualizarRol(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarRol(@PathVariable UUID id) {
+    public ResponseEntity<Void> eliminarRol(@PathVariable String id) {
         rolService.eliminarRol(id);
         return ResponseEntity.noContent().build();
     }

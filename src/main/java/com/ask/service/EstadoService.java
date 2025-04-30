@@ -23,7 +23,7 @@ public class EstadoService {
         return estadoRepository.save(estado);
     }
 
-    public Estado obtenerPorId(UUID id) {
+    public Estado obtenerPorId(String id) {
         return estadoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estado", "id", id));
     }
@@ -32,14 +32,14 @@ public class EstadoService {
         return estadoRepository.findAll();
     }
 
-    public Estado actualizar(UUID id, EstadoRequest request) {
+    public Estado actualizar(String id, EstadoRequest request) {
         Estado estado = obtenerPorId(id);
         estado.setNombreEstado(request.getNombreEstado());
         estado.setDescripcion(request.getDescripcion());
         return estadoRepository.save(estado);
     }
 
-    public void eliminar(UUID id) {
+    public void eliminar(String id) {
         Estado estado = obtenerPorId(id);
         estadoRepository.delete(estado);
     }

@@ -14,8 +14,8 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createRoleIfNotFound("ADMIN", "Administrador del sistema");
-        createRoleIfNotFound("USER", "Usuario estándar del sistema");
+        createRoleIfNotFound("Administrador", "Administrador del sistema");
+        createRoleIfNotFound("Usuario", "Usuario estándar del sistema");
     }
 
     private void createRoleIfNotFound(String nombre, String descripcion) {

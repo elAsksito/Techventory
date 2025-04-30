@@ -6,13 +6,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 public class MovimientoRequest {
 
     @NotNull(message = "El usuario es obligatorio")
-    private UUID idUsuario;
+    private String idUsuario;
 
     @NotBlank(message = "El tipo de movimiento es obligatorio")
     @Size(max = 100, message = "El tipo de movimiento no debe superar los 100 caracteres")

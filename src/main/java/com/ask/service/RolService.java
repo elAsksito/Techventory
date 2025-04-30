@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,18 +22,18 @@ public class RolService {
         return rolRepository.save(rol);
     }
 
-    public Rol obtenerRolPorId(UUID id) {
+    public Rol obtenerRolPorId(String id) {
         return rolRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id));
     }
 
     public List<Rol> obtenerTodos() {
         return rolRepository.findAll();
     }
 
-    public Rol actualizarRol(UUID id, RolRequest request) {
+    public Rol actualizarRol(String id, RolRequest request) {
         Rol rol = rolRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id));
 
         rol.setNombreRol(request.getNombreRol());
         rol.setDescripcionRol(request.getDescripcionRol());
@@ -42,9 +41,9 @@ public class RolService {
         return rolRepository.save(rol);
     }
 
-    public void eliminarRol(UUID id) {
+    public void eliminarRol(String id) {
         Rol rol = rolRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("Rol", "ID", id));
         rolRepository.delete(rol);
     }
 }

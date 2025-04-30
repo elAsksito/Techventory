@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class ProductoRequest {
 
@@ -34,8 +32,8 @@ public class ProductoRequest {
     private String codigoBarras;
 
     @NotNull(message = "La categoría es obligatoria")
-    private UUID idCategoria;
+    private String idCategoria;
 
     @NotNull(message = "El estado es obligatorio")
-    private UUID idEstado;
+    private String idEstado;
 }
