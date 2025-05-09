@@ -17,6 +17,7 @@
     - [Movimientos](#movimientos)
     - [Movimientos de Productos](#movimientos-de-productos)
     - [Roles](#roles)
+    - [Exportar Productos](#exportación-de-productos)
 - [Sígueme y contacta](#sígueme-y-contacta)
 
 ---
@@ -178,6 +179,21 @@ Flujo general:
 - `GET /api/roles/{id}` – Obtener rol.
 - `PUT /api/roles/{id}` – Actualizar rol.
 - `DELETE /api/roles/{id}` – Eliminar rol.
+
+### Exportación de Productos
+
+- `POST /api/exportar` – Exportar productos seleccionados a un archivo Excel.
+
+**Descripción:**  
+Permite exportar una lista de productos en formato Excel. El archivo se devuelve como un archivo adjunto.
+
+**Parámetros:**
+
+- `userId` (query parameter) – ID del usuario que realiza la exportación.
+- `productos` (body) – Lista de productos a exportar.
+
+**Respuesta:**  
+Un archivo Excel con los productos seleccionados.
 
 ---
 
