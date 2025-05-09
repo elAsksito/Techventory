@@ -25,10 +25,7 @@ public class AutenticacionController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> register(@RequestBody @Valid LoginRequest request) {
-        String token = autenticacionService.login(request);
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
+        return ResponseEntity.ok(autenticacionService.login(request));
     }
 }

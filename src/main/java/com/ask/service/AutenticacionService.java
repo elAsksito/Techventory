@@ -1,7 +1,9 @@
 package com.ask.service;
 
 import com.ask.dto.LoginRequest;
+import com.ask.dto.LoginResponse;
 import com.ask.dto.RegisterRequest;
+import com.ask.dto.UsuarioDTO;
 import com.ask.exception.BusinessException;
 import com.ask.exception.ResourceNotFoundException;
 import com.ask.model.Rol;
@@ -22,15 +24,29 @@ public class AutenticacionService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-    public String login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Usuario usuario = usuarioRepository.findByCorreoUsuario(loginRequest.getCorreoUsuario())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "correo", loginRequest.getCorreoUsuario()));
 
-        if(!passwordEncoder.matches(loginRequest.getContraseniaUsuario(), usuario.getContraseniaUsuario())){
+        if (!passwordEncoder.matches(loginRequest.getContraseniaUsuario(), usuario.getContraseniaUsuario())) {
             throw new BusinessException("Contraseña incorrecta");
         }
 
-        return jwtProvider.generateToken(usuario.getCorreoUsuario(), usuario.getRol().getNombreRol());
+        String token = jwtProvider.generateToken(usuario.getCorreoUsuario(), usuario.getRol().getNombreRol());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO(
+                usuario.getIdUsuario(),
+                usuario.getNombreUsuario(),
+                usuario.getApellidoUsuario(),
+                usuario.getDniUsuario(),
+                usuario.getTelefonoUsuario(),
+                usuario.getCorreoUsuario(),
+                usuario.getUsernameUsuario(),
+                usuario.getEstadoUsuario(),
+                usuario.getRol().getNombreRol()
+        );
+
+        return new LoginResponse(token, usuarioDTO);
     }
 
     public Usuario register(RegisterRequest registerRequest) {
@@ -56,6 +72,7 @@ public class AutenticacionService {
                 .correoUsuario(request.getCorreoUsuario())
                 .usernameUsuario(request.getUsernameUsuario())
                 .contraseniaUsuario(passwordEncoder.encode(request.getContraseniaUsuario()))
+                .estadoUsuario(request.getEstadoUsuario())
                 .rol(rol)
                 .build();
     }

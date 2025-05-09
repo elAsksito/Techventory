@@ -2,12 +2,18 @@ package com.ask.controller;
 
 import com.ask.dto.ProductoRequest;
 import com.ask.model.Producto;
+import com.ask.model.Usuario;
+import com.ask.service.ExcelExportService;
 import com.ask.service.ProductoService;
+import com.ask.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,6 +23,8 @@ import java.util.List;
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final ExcelExportService excelExportService;
+    private final UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity<Producto> crearProducto(@Valid @RequestBody ProductoRequest request) {
@@ -67,5 +75,19 @@ public class ProductoController {
     public ResponseEntity<Void> eliminarProducto(@PathVariable String id) {
         productoService.eliminar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/exportar")
+    public ResponseEntity<byte[]> exportarProductos(
+            @RequestParam String userId,
+            @RequestBody List<Producto> productos) throws IOException {
+
+        Usuario usuario = usuarioService.obtenerPorId(userId);
+
+        byte[] excelFile = excelExportService.exportarProductosAExcel(usuario, productos);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=productos.xlsx");
+        return new ResponseEntity<>(excelFile, headers, HttpStatus.OK);
     }
 }

@@ -50,9 +50,12 @@ public class UsuarioService {
         usuario.setTelefonoUsuario(request.getTelefonoUsuario());
         usuario.setCorreoUsuario(request.getCorreoUsuario());
         usuario.setUsernameUsuario(request.getUsernameUsuario());
-        usuario.setContraseniaUsuario(passwordEncoder.encode(request.getContraseniaUsuario()));
+        if (!request.getContraseniaUsuario().isBlank()) {
+            usuario.setContraseniaUsuario(passwordEncoder.encode(request.getContraseniaUsuario()));
+        }
 
         Rol rol = getRolByName(request.getRol());
+        usuario.setEstadoUsuario(request.getEstadoUsuario());
         usuario.setRol(rol);
 
         return usuarioRepository.save(usuario);
@@ -74,6 +77,7 @@ public class UsuarioService {
                 .correoUsuario(request.getCorreoUsuario())
                 .usernameUsuario(request.getUsernameUsuario())
                 .contraseniaUsuario(passwordEncoder.encode(request.getContraseniaUsuario()))
+                .estadoUsuario(request.getEstadoUsuario())
                 .rol(rol)
                 .build();
     }

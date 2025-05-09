@@ -42,6 +42,9 @@ public class Usuario {
     @Column(name = "contrasenia_usuario", nullable = false, length = 150)
     private String contraseniaUsuario;
 
+    @Column(name = "estado_usuario", nullable = false, length = 150)
+    private String estadoUsuario;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol")
     private Rol rol;

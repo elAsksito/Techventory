@@ -29,9 +29,10 @@ public class RegisterRequest {
     @NotBlank(message = "El username no puede estar vacío")
     private String usernameUsuario;
 
-    @NotBlank(message = "La contraseña no puede estar vacía")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 dígitos")
     private String contraseniaUsuario;
+
+    @NotBlank(message = "El estado no puede estar vacía")
+    private String estadoUsuario;
 
     @NotBlank(message = "El rol no puede estar vacío")
     private String rol;
